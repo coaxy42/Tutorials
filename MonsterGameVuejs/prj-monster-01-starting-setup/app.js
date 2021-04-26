@@ -12,39 +12,39 @@ const app = Vue.createApp({
             logMessages: []
         };
     },
-    computed:{
-        monsterBarStyles(){
-            return { width: this.monsterHealth + '%'}
+    computed: {
+        monsterBarStyles() {
+            return { width: this.monsterHealth + '%' }
         },
-        playerBarStyles(){
-            return { width: this.playerHealth + '%'}
+        playerBarStyles() {
+            return { width: this.playerHealth + '%' }
         },
         mayUseSpecialAttack() {
-            return this.currentRound % 3 !== 0; 
+            return this.currentRound % 3 !== 0;
         }
     },
-    watch:{
+    watch: {
         playerHealth(value) {
-            if (value <= 0 && this,this.monsterHealth <= 0){
+            if (value <= 0 && this, this.monsterHealth <= 0) {
                 // A draw
                 this.winner = 'draw';
-            }else if (value <= 0){
+            } else if (value <= 0) {
                 //player lost
                 this.winner = 'monster';
             }
         },
-        monsterHealth(value){
-            if (value <= 0 && this,this.playerHealth <= 0){
-            // A draw
-            this.winner = 'draw';
-        }else if (value <= 0){
-            //monster lost
-            this.winner = 'player';
-        }
+        monsterHealth(value) {
+            if (value <= 0 && this, this.playerHealth <= 0) {
+                // A draw
+                this.winner = 'draw';
+            } else if (value <= 0) {
+                //monster lost
+                this.winner = 'player';
+            }
         }
     },
     methods: {
-        startGame(){
+        startGame() {
             this.playerHealth = 100;
             this.monsterHealth = 100;
             this.winner = null;
@@ -71,20 +71,20 @@ const app = Vue.createApp({
             this.addLogMessage('player', 'special', attackValue);
             this.attackPlayer();
         },
-        healPlayer(){
+        healPlayer() {
             this.currentRound++;
-            const healValue = getRandomValue(8,20);
-            if(this.playerHealth + healValue > 100){
+            const healValue = getRandomValue(8, 20);
+            if (this.playerHealth + healValue > 100) {
                 this.playerHealth = 100;
-            }else{
+            } else {
                 this.playerHealth += healValue;
             }
             this.attackPlayer();
         },
-        surrender(){
+        surrender() {
             this.winner = 'monster';
         },
-        addLogMessage(who, what,  value){
+        addLogMessage(who, what, value) {
             this.logMessages.unshift({
                 actionBy: who,
                 actionType: what,
