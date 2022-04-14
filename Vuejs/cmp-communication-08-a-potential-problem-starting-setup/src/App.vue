@@ -5,8 +5,6 @@
       :text="activeTopic && activeTopic.fullText"
     ></active-element>
     <knowledge-base
-      :topics="topics"
-      @select-topic="activateTopic"
     ></knowledge-base>
   </div>
   <div>
@@ -47,6 +45,12 @@ export default {
       ],
     };
   },
+  provide(){
+    return {
+      topics: this.topics,
+      selectTopic: this.activateTopic
+    };
+  },
   methods: {
     activateTopic(topicId) {
       this.activeTopic = this.topics.find((topic) => topic.id === topicId);
@@ -59,6 +63,16 @@ export default {
       
     },
   },
+  mounted(){
+    setTimeout(() => {
+      this.topics.push({
+        id: 'events',
+        title: 'Events',
+        description: 'Evemts are important in Vue',
+        fullText: 'Events allow you to trigger code on demand!'
+      });
+    }, 3000);
+  }
 };
 </script>
 
